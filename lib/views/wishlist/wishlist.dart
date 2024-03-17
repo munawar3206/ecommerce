@@ -22,8 +22,7 @@ class _FavPageState extends State<FavPage> {
     _prefs = await SharedPreferences.getInstance();
     setState(() {
       likedItems = _prefs.getKeys().where((key) {
-        final dynamic value =
-            _prefs.get(key);
+        final dynamic value = _prefs.get(key);
         if (value is bool) {
           return value;
         }
@@ -34,25 +33,33 @@ class _FavPageState extends State<FavPage> {
 
   @override
   Widget build(BuildContext context) {
-    String title = likedItems.isEmpty ? "Wishlist" : "Liked Items";
-
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          title,
+          "Wishlist",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
-      body: ListView.builder(
-        itemCount: likedItems.length,
-        itemBuilder: (context, index) {
-          String itemName = likedItems[index];
-          return ListTile(
-            title: Text(itemName),
-          );
-        },
-      ),
+      body: likedItems.isEmpty
+          ? Center(
+              child: Text(
+                "No liked items",
+                style: TextStyle(fontSize: 18, color: Colors.red),
+              ),
+            )
+          : ListView.builder(
+              itemCount: likedItems.length,
+              itemBuilder: (context, index) {
+                String itemName = likedItems[index];
+                return ListTile(
+                  title: Text(
+                    itemName,
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                );
+              },
+            ),
     );
   }
 }

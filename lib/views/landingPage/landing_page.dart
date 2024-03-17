@@ -1,5 +1,5 @@
 import 'package:ecommerce/controller/home_provider.dart';
-import 'package:ecommerce/views/landingPage/cart_page/wishlist/wishlist.dart';
+import 'package:ecommerce/views/wishlist/wishlist.dart';
 import 'package:ecommerce/views/landingPage/components/list_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';

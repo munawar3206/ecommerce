@@ -1,5 +1,5 @@
 import 'package:ecommerce/controller/home_provider.dart';
-import 'package:ecommerce/views/landingPage/bottom_tab_bar.dart';
+import 'package:ecommerce/views/landingPage/landing_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
