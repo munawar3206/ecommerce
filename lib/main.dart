@@ -1,5 +1,6 @@
 import 'package:ecommerce/controller/cart_provider.dart';
 import 'package:ecommerce/controller/home_provider.dart';
+import 'package:ecommerce/controller/internet_provider.dart';
 import 'package:ecommerce/views/spalsh.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,7 +22,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => CartProvider(),
         ),
-        
+        ChangeNotifierProvider(
+          create: (context) => InternetConnectivityProvider(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

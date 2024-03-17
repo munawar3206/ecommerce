@@ -1,4 +1,5 @@
 import 'package:ecommerce/controller/cart_provider.dart';
+import 'package:ecommerce/controller/internet_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -19,6 +20,8 @@ class CartPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final cartProvider = Provider.of<CartProvider>(context);
     final int quantity = cartProvider.getQuantity(itemName);
+     Provider.of<InternetConnectivityProvider>(context, listen: false)
+        .getInternetConnectivity(context);
 
     void decrementCounter() {
       if (quantity > 1) {

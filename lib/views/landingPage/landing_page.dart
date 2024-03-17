@@ -1,4 +1,5 @@
 import 'package:ecommerce/controller/home_provider.dart';
+import 'package:ecommerce/controller/internet_provider.dart';
 import 'package:ecommerce/views/wishlist/wishlist.dart';
 import 'package:ecommerce/views/landingPage/components/list_container.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,8 @@ class LandingPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
-
+    Provider.of<InternetConnectivityProvider>(context, listen: false)
+        .getInternetConnectivity(context);
     return SafeArea(
       child: GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
@@ -86,8 +88,7 @@ class LandingPage extends StatelessWidget {
                           price: item['price'],
                           image: item['image'],
                           text: item['text'],
-                        ))
-                    ,
+                        )),
               ],
             ),
           ),
