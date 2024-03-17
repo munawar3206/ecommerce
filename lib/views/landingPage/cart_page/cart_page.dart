@@ -1,58 +1,59 @@
+import 'package:ecommerce/controller/cart_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class CartPage extends StatefulWidget {
-  const CartPage(
-      {super.key,
-      required this.itemName,
-      required this.itemImage,
-      required this.itemPrice,
-      required this.itemDes});
+class CartPage extends StatelessWidget {
   final String itemName;
   final AssetImage itemImage;
   final int itemPrice;
   final String itemDes;
 
-  @override
-  State<CartPage> createState() => _CartPageState();
-}
-
-class _CartPageState extends State<CartPage> {
-  int _counter = 1;
-  List<Map<String, dynamic>> cartItems = [];
-  void _decrementCounter() {
-    setState(() {
-      if (_counter > 1) {
-        _counter--;
-      }
-    });
-  }
-
-  // void addToCart() {
-  //   cartItems.add({
-  //     'itemName': widget.itemName,
-  //     'itemImage': widget.itemImage,
-  //     'itemPrice': widget.itemPrice,
-  //     'itemDes': widget.itemDes,
-  //     'quantity': _counter,
-  //   });
-  // }
-
-  void removeFromCart() {
-    setState(() {
-      cartItems.remove(cartItems);
-    });
-  }
+  const CartPage({super.key, 
+    required this.itemName,
+    required this.itemImage,
+    required this.itemPrice,
+    required this.itemDes,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final cartProvider = Provider.of<CartProvider>(context);
+    final int quantity = cartProvider.getQuantity(itemName);
+
+    void decrementCounter() {
+      if (quantity > 1) {
+        cartProvider.setQuantity(itemName, quantity - 1);
+      }
+    }
+
+    void incrementCounter() {
+      cartProvider.setQuantity(itemName, quantity + 1);
+    }
+
+    void removeFromCart() {
+      cartProvider.removeFromCart(itemName);
+      Navigator.pop(context);
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          backgroundColor: Color.fromARGB(255, 255, 190, 190),
+          content: Text(
+            'Item removed from Cart Successfully',
+            style: TextStyle(fontWeight: FontWeight.bold),
+          ),
+          duration: Duration(seconds: 2),
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
         leading: IconButton(
-            onPressed: () {
-              Navigator.pop(context);
-            },
-            icon: const Icon(Icons.arrow_back_ios)),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          icon: const Icon(Icons.arrow_back_ios),
+        ),
         title: const Text(
           "Your Cart",
           style: TextStyle(fontWeight: FontWeight.bold),
@@ -92,15 +93,18 @@ class _CartPageState extends State<CartPage> {
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
-                                  widget.itemName,
+                                  itemName,
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 GestureDetector(
-                                  onTap: _decrementCounter,
+                                  onTap: decrementCounter,
                                   child: Padding(
                                     padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0, horizontal: 16.0),
+                                      vertical: 8.0,
+                                      horizontal: 16.0,
+                                    ),
                                     child: Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,
@@ -112,17 +116,13 @@ class _CartPageState extends State<CartPage> {
                                         ),
                                         const SizedBox(width: 10),
                                         Text(
-                                          '$_counter',
+                                          '$quantity',
                                           style:
                                               const TextStyle(fontSize: 18.0),
                                         ),
                                         const SizedBox(width: 10),
                                         GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              _counter++;
-                                            });
-                                          },
+                                          onTap: incrementCounter,
                                           child: const CircleAvatar(
                                             radius: 12,
                                             backgroundColor: Colors.white,
@@ -132,11 +132,11 @@ class _CartPageState extends State<CartPage> {
                                       ],
                                     ),
                                   ),
-                                )
+                                ),
                               ],
                             ),
                             Text(
-                              widget.itemPrice.toString(),
+                              itemPrice.toString(),
                               style:
                                   const TextStyle(fontWeight: FontWeight.bold),
                             ),
@@ -148,8 +148,9 @@ class _CartPageState extends State<CartPage> {
                           decoration: BoxDecoration(
                             shape: BoxShape.circle,
                             border: Border.all(
-                                color: const Color.fromARGB(255, 255, 255, 255),
-                                width: 10),
+                              color: const Color.fromARGB(255, 255, 255, 255),
+                              width: 10,
+                            ),
                           ),
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
@@ -157,8 +158,7 @@ class _CartPageState extends State<CartPage> {
                               children: [
                                 CircleAvatar(
                                   radius: 60,
-                                  backgroundImage:
-                                      AssetImage(widget.itemImage.assetName),
+                                  backgroundImage: itemImage,
                                 ),
                               ],
                             ),
@@ -166,7 +166,7 @@ class _CartPageState extends State<CartPage> {
                         ),
                       ),
                       Text(
-                        widget.itemDes,
+                        itemDes,
                         maxLines: 5,
                       ),
                       const SizedBox(
@@ -176,27 +176,13 @@ class _CartPageState extends State<CartPage> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            "Number of Quantity  : $_counter",
-                            style: const TextStyle(fontWeight: FontWeight.bold),
+                            "Number of Quantity  : $quantity",
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                           IconButton(
-                            onPressed: () {
-                              removeFromCart();
-                              Navigator.pop(context);
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  backgroundColor:
-                                      Color.fromARGB(255, 255, 190, 190),
-                                  content: Text(
-                                    'Item removed from Cart Successfully',
-                                    style:
-                                        TextStyle(fontWeight: FontWeight.bold),
-                                  ),
-                                  duration:
-                                      Duration(seconds: 2), // Adjust as needed
-                                ),
-                              );
-                            },
+                            onPressed: removeFromCart,
                             icon: const Icon(
                               Icons.delete,
                               color: Colors.red,
@@ -205,14 +191,14 @@ class _CartPageState extends State<CartPage> {
                         ],
                       ),
                       Text(
-                        "Price   : ${widget.itemPrice}",
+                        "Price   : $itemPrice",
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
-                        "Total Price  : ${_counter * widget.itemPrice}",
+                        "Total Price  : ${quantity * itemPrice}",
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       const SizedBox(

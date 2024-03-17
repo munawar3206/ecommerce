@@ -29,10 +29,9 @@ class _ListContainerState extends State<ListContainer> {
   @override
   void initState() {
     super.initState();
-    _checkLiked(); 
+    _checkLiked(); // Check if the item is liked when widget initializes
   }
 
- 
   Future<void> _checkLiked() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     bool liked = prefs.getBool(widget.content) ?? false;
@@ -41,11 +40,10 @@ class _ListContainerState extends State<ListContainer> {
     });
   }
 
-
   Future<void> _toggleLike() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     setState(() {
-      isLiked = !isLiked; 
+      isLiked = !isLiked;
     });
     await prefs.setBool(widget.content, isLiked);
   }

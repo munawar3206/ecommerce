@@ -4,14 +4,9 @@ import 'package:ecommerce/views/landingPage/components/list_container.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class LandingPage extends StatefulWidget {
-  const LandingPage({Key? key}) : super(key: key);
+class LandingPage extends StatelessWidget {
+  const LandingPage({super.key});
 
-  @override
-  _LandingPageState createState() => _LandingPageState();
-}
-
-class _LandingPageState extends State<LandingPage> {
   @override
   Widget build(BuildContext context) {
     final homeProvider = Provider.of<HomeProvider>(context);
@@ -57,10 +52,10 @@ class _LandingPageState extends State<LandingPage> {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => FavPage(),
+                                builder: (context) => const FavPage(),
                               ));
                         },
-                        icon: Icon(
+                        icon: const Icon(
                           Icons.favorite_border_rounded,
                           color: Colors.red,
                         ),
@@ -92,7 +87,7 @@ class _LandingPageState extends State<LandingPage> {
                           image: item['image'],
                           text: item['text'],
                         ))
-                    .toList(),
+                    ,
               ],
             ),
           ),

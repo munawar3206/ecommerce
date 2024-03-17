@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FavPage extends StatefulWidget {
-  const FavPage({Key? key}) : super(key: key);
+  const FavPage({super.key});
 
   @override
   State<FavPage> createState() => _FavPageState();
@@ -35,14 +35,14 @@ class _FavPageState extends State<FavPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           "Wishlist",
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
       body: likedItems.isEmpty
-          ? Center(
+          ? const Center(
               child: Text(
                 "No liked items",
                 style: TextStyle(fontSize: 18, color: Colors.red),
@@ -55,7 +55,7 @@ class _FavPageState extends State<FavPage> {
                 return ListTile(
                   title: Text(
                     itemName,
-                    style: TextStyle(fontWeight: FontWeight.bold),
+                    style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                 );
               },
