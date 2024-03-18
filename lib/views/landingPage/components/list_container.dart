@@ -29,7 +29,7 @@ class _ListContainerState extends State<ListContainer> {
   @override
   void initState() {
     super.initState();
-    _checkLiked(); // Check if the item is liked when widget initializes
+    _checkLiked(); 
   }
 
   Future<void> _checkLiked() async {
@@ -108,7 +108,7 @@ class _ListContainerState extends State<ListContainer> {
                         size: 19,
                       ),
                       Text(
-                        widget.price.toString(), // Convert price to String
+                        widget.price.toString(), 
                         style: const TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 18,
@@ -129,7 +129,7 @@ class _ListContainerState extends State<ListContainer> {
                     children: [
                       IconButton(
                         onPressed: () async {
-                          await _toggleLike(); // Toggle like state
+                          await _toggleLike(); 
                         },
                         icon: isLiked
                             ? const Icon(
@@ -162,7 +162,7 @@ class _ListContainerState extends State<ListContainer> {
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(15),
                         image: DecorationImage(
-                          image: widget.image, // Use widget.image directly
+                          image: widget.image, 
                           fit: BoxFit.cover,
                         ),
                       ),
